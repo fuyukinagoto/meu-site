@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Menu RPG Pirata</title>
+
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'IM Fell English', serif;
+  background: linear-gradient(rgba(30,60,100,0.85), rgba(10,30,60,0.85)),
+              url('https://www.transparenttextures.com/patterns/old-map.png');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* MENU */
+#menu, #personagemBox, #loreBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.4);
+  width: 400px;
+}
+
+h1 {
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  color: #0a1f33;
+}
+
+/* BOTÕES */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background: #0a3d62;
+  color: white;
+  margin: 15px 0;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background: #145a86;
+  transform: scale(1.05);
+}
+
+#btnLore {
+  font-size: 1.8em;
+  padding: 25px 70px;
+}
+
+#btnCur, #btnPers {
+  font-size: 1.2em;
+  padding: 15px 50px;
+}
+
+/* ESCONDER TELAS */
+#personagemBox, #loreBox {
+  display: none;
+}
+
+/* TEXTO LORE */
+#loreTexto {
+  max-height: 250px;
+  overflow-y: auto;
+  text-align: left;
+  color: #0a1f33;
+}
+
+/* TEXTAREA */
+textarea {
+  width: 90%;
+  height: 150px;
+  padding: 10px;
+  border-radius: 5px;
+  resize: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU -->
+<div id="menu">
+  <h1>🏴‍☠️ Escolha seu destino</h1>
+  <button id="btnLore" onclick="abrirLore()">📖 Lore</button>
+  <button id="btnCur">🧠 Curiosidades</button>
+  <button id="btnPers" onclick="abrirPersonagem()">🧙 Meu Personagem</button>
+</div>
+
+<!-- LORE -->
+<div id="loreBox">
+  <h2>📖 Primeira Página</h2>
+
+  <div id="loreTexto">
+A era de ouro dos piratas começou em 1650 e teve seu fim em 1730 pois não havia mais motivos para continuar. Todo o mundo foi explorado, tesouros encontrados, lendas descobertas...
+
+Mas tudo mudou na execução de um homem.
+
+O capitão Ragnar Draven, conhecido como o Rei dos Mares, o Rei dos Piratas. O homem que possuía a relíquia mais poderosa que já existiu, aquele que jamais conheceu a derrota.
+
+Após anos sem motivação, percebendo que a era dos piratas estava acabando, ele decidiu esconder seu tesouro em uma ilha desconhecida, nunca vista por qualquer outro pirata. Lá, ele escondeu sua relíquia... e os segredos do mundo.
+
+Depois disso, ele retornou... e se entregou à Marinha.
+
+No dia de sua execução, ele declarou:
+
+"A era dos piratas não pode acabar! Não deve acabar! Passamos anos vivendo a maior aventura que já existiu! Vamos fazer a próxima geração seguir nossos passos! O mundo vai mudar... o mundo será diferente! ENTÃO VÁ! PEGUE MINHA RELÍQUIA! MEUS TESOUROS! DESCUBRA O SEGREDO DO MUNDO! E SE TORNE O PRÓXIMO REI DOS PIRATAS!"
+
+Após suas palavras... ele foi executado.
+
+E com sua morte, o mundo realmente mudou.
+
+Criaturas novas surgiram. Ilhas desconhecidas apareceram. As regras das relíquias mudaram.
+
+O mundo se tornou maior... mais perigoso... mais misterioso.
+
+Grande o suficiente para que a Era de Ouro dos Piratas continuasse...
+
+por mais 6 mil anos.
+  </div>
+
+  <br>
+  <button onclick="fecharLore()">Voltar</button>
+</div>
+
+<!-- PERSONAGEM -->
+<div id="personagemBox">
+  <h2>🧙 Meu Personagem</h2>
+
+  <textarea id="textoPersonagem" placeholder="Escreva sobre seu personagem..."></textarea>
+
+  <br>
+
+  <button onclick="salvar()">Salvar</button>
+  <button onclick="fechar()">Voltar</button>
+</div>
+
+<script>
+function abrirLore() {
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("loreBox").style.display = "flex";
+}
+
+function fecharLore() {
+  document.getElementById("loreBox").style.display = "none";
+  document.getElementById("menu").style.display = "flex";
+}
+
+function abrirPersonagem() {
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("personagemBox").style.display = "flex";
+
+  let salvo = localStorage.getItem("personagemTexto");
+  if (salvo) {
+    document.getElementById("textoPersonagem").value = salvo;
+  }
+}
+
+function fechar() {
+  document.getElementById("personagemBox").style.display = "none";
+  document.getElementById("menu").style.display = "flex";
+}
+
+function salvar() {
+  let texto = document.getElementById("textoPersonagem").value;
+  localStorage.setItem("personagemTexto", texto);
+  alert("Personagem salvo!");
+}
+</script>
+
+</body>
+</html>
