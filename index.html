@@ -1,89 +1,43 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Menu RPG Pirata</title>
-
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+<title>RPG Pirata</title>
 
 <style>
 body {
   margin: 0;
-  font-family: 'IM Fell English', serif;
-  background: linear-gradient(rgba(30,60,100,0.85), rgba(10,30,60,0.85)),
-              url('https://www.transparenttextures.com/patterns/old-map.png');
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  font-family: serif;
+  background: black;
+  color: #e0c68c;
+  text-align: center;
 }
 
 /* MENU */
-#menu, #personagemBox, #loreBox {
+#menu {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 0 25px rgba(0,0,0,0.4);
-  width: 400px;
+  gap: 10px;
+  margin-top: 100px;
 }
 
-h1 {
-  margin-bottom: 30px;
-  font-size: 2.2em;
-  color: #0a1f33;
-}
-
-/* BOTÕES */
 button {
+  background: #1a1a1a;
+  border: 1px solid #e0c68c;
+  color: #e0c68c;
+  padding: 10px;
+  font-size: 16px;
   cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  background: #0a3d62;
-  color: white;
-  margin: 15px 0;
-  transition: all 0.2s;
 }
 
 button:hover {
-  background: #145a86;
-  transform: scale(1.05);
+  background: #333;
 }
 
-#btnLore {
-  font-size: 1.8em;
-  padding: 25px 70px;
-}
-
-#btnCur, #btnPers {
-  font-size: 1.2em;
-  padding: 15px 50px;
-}
-
-/* ESCONDER TELAS */
-#personagemBox, #loreBox {
+/* CAIXAS */
+#loreBox, #personagemBox, #rituaisBox {
   display: none;
-}
-
-/* TEXTO LORE */
-#loreTexto {
-  max-height: 250px;
-  overflow-y: auto;
-  text-align: left;
-  color: #0a1f33;
-}
-
-/* TEXTAREA */
-textarea {
-  width: 90%;
-  height: 150px;
-  padding: 10px;
-  border-radius: 5px;
-  resize: none;
+  padding: 20px;
 }
 </style>
 </head>
@@ -92,18 +46,16 @@ textarea {
 
 <!-- MENU -->
 <div id="menu">
-  <h1>🏴‍☠️ Escolha seu destino</h1>
-  <button id="btnLore" onclick="abrirLore()">📖 Lore</button>
-  <button id="btnCur">🧠 Curiosidades</button>
-  <button id="btnPers" onclick="abrirPersonagem()">🧙 Meu Personagem</button>
+  <button onclick="abrirLore()">📖 História</button>
+  <button onclick="abrirPersonagem()">👤 Personagem</button>
+  <button onclick="abrirRituais()">✨ Rituais</button>
 </div>
 
-<!-- LORE -->
+<!-- HISTÓRIA -->
 <div id="loreBox">
-  <h2>📖 Primeira Página</h2>
-
-  <div id="loreTexto">
-A era de ouro dos piratas começou em 1650 e teve seu fim em 1730 pois não havia mais motivos para continuar. Todo o mundo foi explorado, tesouros encontrados, lendas descobertas...
+  <h2>📖 História</h2>
+  <p>
+  A era de ouro dos piratas começou em 1650 e teve seu fim em 1730 pois não havia mais motivos para continuar. Todo o mundo foi explorado, tesouros encontrados, lendas descobertas...
 
 Mas tudo mudou na execução de um homem.
 
@@ -128,54 +80,111 @@ O mundo se tornou maior... mais perigoso... mais misterioso.
 Grande o suficiente para que a Era de Ouro dos Piratas continuasse...
 
 por mais 6 mil anos.
-  </div>
-
-  <br>
-  <button onclick="fecharLore()">Voltar</button>
+  </p>
+  <button onclick="voltar()">Voltar</button>
 </div>
 
 <!-- PERSONAGEM -->
 <div id="personagemBox">
-  <h2>🧙 Meu Personagem</h2>
+  <h2>👤 Personagem</h2>
+  <input type="text" id="nome" placeholder="Seu nome"><br><br>
+  <button onclick="salvar()">Salvar</button>
+  <p id="resultado"></p>
+  <button onclick="voltar()">Voltar</button>
+</div>
 
-  <textarea id="textoPersonagem" placeholder="Escreva sobre seu personagem..."></textarea>
+<!-- RITUAIS -->
+<div id="rituaisBox">
+  <h2>✨ Rituais</h2>
+
+  <div>
+    <button onclick="filtrar('geral')">Geral</button>
+    <button onclick="filtrar('ataque')">Ataque</button>
+    <button onclick="filtrar('defesa')">Defesa</button>
+    <button onclick="filtrar('invocacao')">Invocação</button>
+    <button onclick="filtrar('controle')">Controle</button>
+    <button onclick="filtrar('suporte')">Suporte</button>
+  </div>
+
+  <div id="listaRituais" style="margin-top:15px; text-align:left;"></div>
 
   <br>
-
-  <button onclick="salvar()">Salvar</button>
-  <button onclick="fechar()">Voltar</button>
+  <button onclick="voltar()">Voltar</button>
 </div>
 
 <script>
-function abrirLore() {
-  document.getElementById("menu").style.display = "none";
-  document.getElementById("loreBox").style.display = "flex";
+// SOM
+function playSound() {
+  const audio = new Audio("https://www.soundjay.com/page-flip-01a.mp3");
+  audio.play();
 }
 
-function fecharLore() {
+// MENU
+function voltar() {
+  playSound();
+  document.getElementById("menu").style.display = "flex";
   document.getElementById("loreBox").style.display = "none";
-  document.getElementById("menu").style.display = "flex";
-}
-
-function abrirPersonagem() {
-  document.getElementById("menu").style.display = "none";
-  document.getElementById("personagemBox").style.display = "flex";
-
-  let salvo = localStorage.getItem("personagemTexto");
-  if (salvo) {
-    document.getElementById("textoPersonagem").value = salvo;
-  }
-}
-
-function fechar() {
   document.getElementById("personagemBox").style.display = "none";
-  document.getElementById("menu").style.display = "flex";
+  document.getElementById("rituaisBox").style.display = "none";
+}
+
+// HISTÓRIA
+function abrirLore() {
+  playSound();
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("loreBox").style.display = "block";
+}
+
+// PERSONAGEM
+function abrirPersonagem() {
+  playSound();
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("personagemBox").style.display = "block";
 }
 
 function salvar() {
-  let texto = document.getElementById("textoPersonagem").value;
-  localStorage.setItem("personagemTexto", texto);
-  alert("Personagem salvo!");
+  let nome = document.getElementById("nome").value;
+  localStorage.setItem("nome", nome);
+  document.getElementById("resultado").innerText = "Salvo: " + nome;
+}
+
+// RITUAIS
+const rituais = [
+  {nome: "Chamas do Abismo", tipo: "ataque", desc: "Causa dano massivo com fogo sombrio."},
+  {nome: "Escudo Fantasma", tipo: "defesa", desc: "Protege o usuário contra ataques."},
+  {nome: "Invocar Kraken", tipo: "invocacao", desc: "Invoca uma criatura gigante dos mares."},
+  {nome: "Correntes do Mar", tipo: "controle", desc: "Imobiliza inimigos."},
+  {nome: "Benção das Marés", tipo: "suporte", desc: "Aumenta o poder dos aliados."}
+];
+
+function abrirRituais() {
+  playSound();
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("rituaisBox").style.display = "block";
+  mostrarRituais("geral");
+}
+
+function mostrarRituais(tipo) {
+  const lista = document.getElementById("listaRituais");
+  lista.innerHTML = "";
+
+  let filtrados = tipo === "geral"
+    ? rituais
+    : rituais.filter(r => r.tipo === tipo);
+
+  filtrados.forEach(r => {
+    lista.innerHTML += `
+      <div style="margin-bottom:10px;">
+        <b>${r.nome}</b><br>
+        <small>${r.desc}</small>
+      </div>
+    `;
+  });
+}
+
+function filtrar(tipo) {
+  playSound();
+  mostrarRituais(tipo);
 }
 </script>
 
