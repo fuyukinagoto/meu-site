@@ -35,7 +35,7 @@ button:hover {
 }
 
 /* CAIXAS */
-#loreBox, #personagemBox, #rituaisBox {
+#loreBox, #personagemBox, #rituaisBox, #detalheRitualBox {
   display: none;
   padding: 20px;
 }
@@ -112,6 +112,15 @@ por mais 6 mil anos.
   <button onclick="voltar()">Voltar</button>
 </div>
 
+<!-- DETALHE DO RITUAL -->
+<div id="detalheRitualBox">
+  <h2 id="ritualNome"></h2>
+  <p id="ritualTipo"></p>
+  <p id="ritualDesc"></p>
+
+  <button onclick="voltarRituais()">Voltar</button>
+</div>
+
 <script>
 // SOM
 function playSound() {
@@ -126,6 +135,7 @@ function voltar() {
   document.getElementById("loreBox").style.display = "none";
   document.getElementById("personagemBox").style.display = "none";
   document.getElementById("rituaisBox").style.display = "none";
+  document.getElementById("detalheRitualBox").style.display = "none";
 }
 
 // HISTÓRIA
@@ -148,13 +158,43 @@ function salvar() {
   document.getElementById("resultado").innerText = "Salvo: " + nome;
 }
 
-// RITUAIS
+// RITUAIS (COM ID E DETALHES)
 const rituais = [
-  {nome: "Chamas do Abismo", tipo: "ataque", desc: "Causa dano massivo com fogo sombrio."},
-  {nome: "Escudo Fantasma", tipo: "defesa", desc: "Protege o usuário contra ataques."},
-  {nome: "Invocar Kraken", tipo: "invocacao", desc: "Invoca uma criatura gigante dos mares."},
-  {nome: "Correntes do Mar", tipo: "controle", desc: "Imobiliza inimigos."},
-  {nome: "Benção das Marés", tipo: "suporte", desc: "Aumenta o poder dos aliados."}
+  {
+    id: 1,
+    nome: "Chamas do Abismo",
+    tipo: "ataque",
+    desc: "Causa dano massivo com fogo sombrio.",
+    detalhes: "Um ritual proibido que invoca chamas do submundo causando destruição total."
+  },
+  {
+    id: 2,
+    nome: "Escudo Fantasma",
+    tipo: "defesa",
+    desc: "Protege o usuário contra ataques.",
+    detalhes: "Cria uma barreira espiritual que reduz drasticamente o dano recebido."
+  },
+  {
+    id: 3,
+    nome: "Invocar Kraken",
+    tipo: "invocacao",
+    desc: "Invoca uma criatura gigante dos mares.",
+    detalhes: "Invoca o lendário Kraken que destrói navios e inimigos sem piedade."
+  },
+  {
+    id: 4,
+    nome: "Correntes do Mar",
+    tipo: "controle",
+    desc: "Imobiliza inimigos.",
+    detalhes: "Correntes feitas de água amaldiçoada prendem o inimigo no lugar."
+  },
+  {
+    id: 5,
+    nome: "Benção das Marés",
+    tipo: "suporte",
+    desc: "Aumenta o poder dos aliados.",
+    detalhes: "Fortalece aliados e enfraquece inimigos ao redor."
+  }
 ];
 
 function abrirRituais() {
@@ -175,7 +215,7 @@ function mostrarRituais(tipo) {
   filtrados.forEach(r => {
     lista.innerHTML += `
       <div style="margin-bottom:10px;">
-        <b>${r.nome}</b><br>
+        <b style="cursor:pointer;" onclick="abrirDetalhe(${r.id})">${r.nome}</b><br>
         <small>${r.desc}</small>
       </div>
     `;
@@ -185,6 +225,25 @@ function mostrarRituais(tipo) {
 function filtrar(tipo) {
   playSound();
   mostrarRituais(tipo);
+}
+
+function abrirDetalhe(id) {
+  playSound();
+
+  const ritual = rituais.find(r => r.id === id);
+
+  document.getElementById("rituaisBox").style.display = "none";
+  document.getElementById("detalheRitualBox").style.display = "block";
+
+  document.getElementById("ritualNome").innerText = ritual.nome;
+  document.getElementById("ritualTipo").innerText = "Tipo: " + ritual.tipo;
+  document.getElementById("ritualDesc").innerText = ritual.detalhes;
+}
+
+function voltarRituais() {
+  playSound();
+  document.getElementById("detalheRitualBox").style.display = "none";
+  document.getElementById("rituaisBox").style.display = "block";
 }
 </script>
 
