@@ -55,8 +55,7 @@ button:hover {
 <div id="loreBox">
   <h2>📖 História</h2>
   <p>
-  A era de ouro dos piratas começou em 1650 e teve seu fim em 1730...
-  (sua história já está aqui completa)
+  A era de ouro dos piratas começou  em 1650 e teve seu fim em 1730 pois n tinha motivos pra continuar todo o mundo foi explorado tesouro encontrado lendas descobertas, mas tudo mudou na execução de um homem o capitão Ragnar Draven conhecido por ser o rei dos mares rei dos piratas o homem com a relíquia mais poderosa que já existiu o homem que já mais conheceu a derrota após anos sem motivação e percebendo que o tempo dos piratas tava acabando ele decidiu esconder seu tesouro em uma ilha desconhecida já mais vista por qualquer outro pirata ele escondeu sua relíquia os segredos do mundo e depois voltou, se entregou pra Marinha, e no dia da sua excursão "a era dos piratas n pode acabar n deve acabar, passamos anos de nossas vitórias na maio aventura que já existiu vamos fazer a próxima geração segui os nossos passos o mundo vai muda o mundo vai se diferente ENTÃO VÁ! PEGUE MINHA RELÍQUIA MEUS TESOUROS DESCUBRA O SEGREDO SOBRE O MUNDO SE TORNE O PRÓXIMO REI DOS PIRATAS!" Depois de suas palavras ele foi morto foi executado pela marinha com sua morte o mundo realmente mudou criaturas novas Ilhas nova o mundo se expandiu as regras das relíquias mudou o mundo tava diferente grande o suficiente pra fazer a a era de ouro dos piratas continua por mais 6 Mill anos
   </p>
   <button onclick="voltar()">Voltar</button>
 </div>
